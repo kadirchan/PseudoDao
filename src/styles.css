@@ -1,0 +1,88 @@
+/* You can add global styles to this file, and also import other style files */
+/* Application-wide Styles */
+h1 {
+  color: rgb(255, 47, 82);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+  text-align: center;
+  text-shadow: purple;
+}
+h2,
+h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+p {
+  color: white;
+  margin-bottom: 1rem;
+}
+a {
+  color: white;
+  margin-bottom: 1rem;
+}
+body {
+  margin: 2em;
+  background-color: #2d222d;
+}
+body,
+input[type="text"],
+button {
+  color: #333;
+  font-family: Cambria, Georgia, serif;
+}
+button {
+  background-color: #172a42;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  color: #4073bb;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+input {
+  color: #b2b9d2;
+  background-color: #212429;
+}
+::placeholder {
+  color: #b2b9d2;
+}
+button:hover {
+  background-color: #111f30;
+  color: #4073bb;
+}
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+div {
+  display: block;
+  border: 0.5px outset;
+
+  text-align: center;
+
+  background-color: #191b1f;
+}
+.main {
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* everywhere else */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

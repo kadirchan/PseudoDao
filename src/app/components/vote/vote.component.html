@@ -1,0 +1,27 @@
+<h2>Vote</h2>
+<p>
+  20176163373245361621121215940258404729952644281815759804613994913414723349889
+</p>
+<input
+  #Input
+  (keyup.enter)="getInput(Input.value); Input.value = ''"
+  placeholder="Proposal ID or Number"
+/>
+<button type="button" (click)="getInput(Input.value)">Enter</button>
+
+<input
+  #Delegation
+  (keyup.enter)="getDelegation(Delegation.value); Delegation.value = ''"
+  placeholder="write 'Approve' to submit"
+  maxlength="7"
+/>
+<button type="button" (click)="getDelegation(Delegation.value)">Enter</button>
+<p id="Delegate" style="display: none">
+  You must write Approve to submit your vote
+</p>
+
+<p id="Invalid" style="display: none">Invalid number or Id</p>
+<div id="Vote" style="display: none">
+  <p>Total number of votes cast : {{ voteCount }}</p>
+  <button type="button" (click)="castVote()">Vote</button>
+</div>

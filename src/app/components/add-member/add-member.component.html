@@ -1,0 +1,39 @@
+<h2>Add/Delete Member</h2>
+<p>0x240e969cdf99fdf65a500Ebf2901Ea0DbbFb10fe</p>
+<input
+  #Box
+  (keyup.enter)="addMember(Box.value); Box.value = ''"
+  placeholder="Address"
+/>
+<button type="button" (click)="addMember(Box.value)">Add</button>
+<button type="button" (click)="deleteMember(Box.value)">Delete</button>
+<p>Current Member Count: {{ memberCount }}</p>
+<p id="NotAdmin" style="display: none">Only admin!</p>
+<p id="AlreadyMember" style="display: none">Already Member</p>
+<p id="Added" style="display: none">Member Added!</p>
+<p id="NotMember" style="display: none">Not Member</p>
+<p id="Deleted" style="display: none">{{ Box.value }} Member Deleted</p>
+<!-- 
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> This is the expansion title </mat-panel-title>
+      <mat-panel-description>
+        This is a summary of the content
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>This is the primary content of the panel.</p>
+  </mat-expansion-panel>
+  <mat-expansion-panel
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title> Self aware panel </mat-panel-title>
+      <mat-panel-description>
+        Currently I am {{ panelOpenState ? "open" : "closed" }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
+</mat-accordion> -->

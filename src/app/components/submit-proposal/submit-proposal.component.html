@@ -1,0 +1,11 @@
+<h2>Submit Proposal</h2>
+<p>Send:</p>
+<input #Amount placeholder="ETH Amount" />
+<p>To:</p>
+<input #Address placeholder="Address" />
+<br />
+<button type="button" (click)="submitProposal(Address.value, Amount.value)">
+  Submit
+</button>
+
+<p id="Sunmitted" style="display: none">Submitted</p>
