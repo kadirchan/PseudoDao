@@ -7,6 +7,7 @@ import { SubmitProposalComponent } from './components/submit-proposal/submit-pro
 import { ProposalsComponent } from './components/proposals/proposals.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { AddMemberComponent } from './components/add-member/add-member.component';
+import { CancelExecuteProposalComponent } from './components/cancel-execute-proposal/cancel-execute-proposal.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AddMemberComponent } from './components/add-member/add-member.component
     ProposalsComponent,
     VoteComponent,
     AddMemberComponent,
+    CancelExecuteProposalComponent,
   ],
   imports: [BrowserModule],
   providers: [{ provide: Window, useValue: window }], // window object

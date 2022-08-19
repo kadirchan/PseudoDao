@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { ethers } from 'ethers';
 
@@ -8,7 +8,11 @@ import { ethers } from 'ethers';
   styleUrls: ['./connect-wallet.component.css'],
 })
 export class ConnectWalletComponent implements OnInit {
+  Dao!: any;
+  provider!: any;
+  signerAddress!: any;
   button_status!: string;
+
   constructor(private dservice: DataService) {
     this.button_status = 'Connect';
   }
@@ -17,29 +21,29 @@ export class ConnectWalletComponent implements OnInit {
 
   async connectWallet() {
     if (typeof window.ethereum !== 'undefined') {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send('eth_requestAccounts', []);
+      this.provider = new ethers.providers.Web3Provider(window.ethereum);
+      await this.provider.send('eth_requestAccounts', []);
       this.button_status = 'Connected';
-      const signerAddress = await provider.getSigner().getAddress();
-      await this.getRank(signerAddress);
+      this.signerAddress = await this.provider.getSigner().getAddress();
+      await this.getRank(this.signerAddress);
     } else {
+      this.InstallMetamask();
       console.log('MetaMask not installed!');
     }
   }
   async getRank(signerAddress: string) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const Dao = new ethers.Contract(
+    this.Dao = new ethers.Contract(
       this.dservice.getContractAddress(),
       this.dservice.getABI(),
-      provider.getSigner()
+      this.provider.getSigner()
     );
 
-    let owner = await Dao['owner']();
+    let owner = await this.Dao['owner']();
     this.dservice.setOwner(owner);
-    let isMember = await Dao['isMember'](signerAddress);
-    let count = await Dao['ProposalCount']();
+    let isMember = await this.Dao['isMember'](signerAddress);
+    let count = await this.Dao['ProposalCount']();
     this.dservice.setProposalCount(count.toNumber());
-    // console.log(count.toNumber());
+
     if (owner == signerAddress) {
       this.dservice.setMemberRank(2);
       this.Owner();
@@ -76,6 +80,7 @@ export class ConnectWalletComponent implements OnInit {
     x = document.getElementById('admin');
     if (x?.style.display == 'block') x.style.display = 'none';
   }
+  InstallMetamask() {}
 }
 declare global {
   interface Window {

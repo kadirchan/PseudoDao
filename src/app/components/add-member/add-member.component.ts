@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers, utils } from 'ethers';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -10,9 +10,10 @@ import { DataService } from 'src/app/services/data.service';
 export class AddMemberComponent implements OnInit {
   memberCount!: number;
   private Dao!: any;
+  status!: string;
   private provider!: any;
   constructor(private dservice: DataService) {}
-  panelOpenState = false;
+
   ngOnInit(): void {
     if (typeof window.ethereum !== 'undefined') {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -24,15 +25,15 @@ export class AddMemberComponent implements OnInit {
     );
     this.getMemberCount();
   }
+
   async deleteMember(memberAddress: string) {
     let signer = await this.provider.getSigner().getAddress();
     if (signer == this.dservice.getOwner()) {
-      this.closeAll();
       if (await this.Dao['isMember'](memberAddress)) {
         let confirmation = await this.Dao['deleteMember'](memberAddress);
         await confirmation.wait(1);
         await this.getMemberCount();
-        this.Deleted();
+        this.Deleted(memberAddress);
       } else {
         this.NotMember();
       }
@@ -44,7 +45,6 @@ export class AddMemberComponent implements OnInit {
   async addMember(memberAddress: string) {
     let signer = await this.provider.getSigner().getAddress();
     if (signer == this.dservice.getOwner()) {
-      this.closeAll();
       if (await this.Dao['isMember'](memberAddress)) {
         this.AlreadyMember();
       } else {
@@ -62,41 +62,20 @@ export class AddMemberComponent implements OnInit {
     this.memberCount = await this.Dao['MemberCount']();
     this.dservice.setMemberCount(this.memberCount);
   }
-  closeAll() {
-    var x = document.getElementById('AlreadyMember');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('Added');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('NotMember');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('Deleted');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('NotAdmin');
-    if (x?.style.display == 'block') x.style.display = 'none';
-  }
+
   AlreadyMember() {
-    this.closeAll();
-    var x = document.getElementById('AlreadyMember');
-    if (x?.style.display == 'none') x.style.display = 'block';
+    this.status = 'Already Member';
   }
   Added() {
-    this.closeAll();
-    var x = document.getElementById('Added');
-    if (x?.style.display == 'none') x.style.display = 'block';
+    this.status = 'Member Added';
   }
   NotAdmin() {
-    this.closeAll();
-    var x = document.getElementById('NotAdmin');
-    if (x?.style.display == 'none') x.style.display = 'block';
+    this.status = 'Only Admin';
   }
-  Deleted() {
-    this.closeAll();
-    var x = document.getElementById('Deleted');
-    if (x?.style.display == 'none') x.style.display = 'block';
+  Deleted(memberAddress: string) {
+    this.status = memberAddress + 'Member Deleted';
   }
   NotMember() {
-    this.closeAll();
-    var x = document.getElementById('NotMember');
-    if (x?.style.display == 'none') x.style.display = 'block';
+    this.status = 'Not Member';
   }
 }

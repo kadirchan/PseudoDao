@@ -1,4 +1,12 @@
 <h2>Proposals</h2>
-<ul class="proposals">
-    <li ></li>
-</ul>
+<div style="background-color: white">
+  <ul class="heroes">
+    <li *ngFor="let log of logs; let i = index">
+      <br />
+      <span>{{ i }} ) {{ logMessage(log) }}</span>
+      <!-- <br />
+      <span>{{ log["topics"][2] }}</span> -->
+    </li>
+  </ul>
+</div>
+<button (click)="getLogs()">logs</button>

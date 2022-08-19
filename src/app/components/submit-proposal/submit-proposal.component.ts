@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BigNumber, ethers } from 'ethers';
+import { BigNumber, ethers, utils } from 'ethers';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -10,6 +10,8 @@ import { DataService } from 'src/app/services/data.service';
 export class SubmitProposalComponent implements OnInit {
   private provider!: any;
   private Dao!: any;
+  Status!: string;
+
   constructor(private dservice: DataService) {}
 
   ngOnInit(): void {
@@ -22,12 +24,45 @@ export class SubmitProposalComponent implements OnInit {
       this.provider.getSigner()
     );
   }
+
   async submitProposal(address: string, value: string) {
     let signer = this.provider.getSigner().getAddress();
     if (await this.Dao['isMember'](signer)) {
+      try {
+        this.Pending();
+        const TransactionResponse = await this.Dao['submitProposal'](
+          address,
+          ethers.utils.parseEther(value),
+          { gasLimit: 500000 }
+        );
+        const TransactionReceipt = await TransactionResponse.wait(1);
+        this.Submitted();
+      } catch (err) {
+        console.log(err);
+        this.Error();
+      }
     } else {
       this.NotMember();
     }
   }
-  NotMember() {}
+  Pending() {
+    var x = document.getElementById('Status');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    this.Status = 'Pending';
+  }
+  NotMember() {
+    var x = document.getElementById('Status');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    this.Status = 'Member Only';
+  }
+  Submitted() {
+    var x = document.getElementById('Status');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    this.Status = 'Submitted';
+  }
+  Error() {
+    var x = document.getElementById('Status');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    this.Status = 'Error';
+  }
 }

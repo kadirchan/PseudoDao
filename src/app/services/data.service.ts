@@ -19,6 +19,19 @@ export class DataService {
       'https://ropsten.infura.io/v3/5073568d7c044755a82e22f4e1081f64';
     this.ABI = [
       {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'memberAddress',
+            type: 'address',
+          },
+        ],
+        name: 'addMember',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         inputs: [],
         stateMutability: 'payable',
         type: 'constructor',
@@ -37,6 +50,63 @@ export class DataService {
         inputs: [],
         name: 'alreadyVoted_or_Canceled',
         type: 'error',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+        ],
+        name: 'cancelProposal',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'string',
+            name: 'declaration',
+            type: 'string',
+          },
+        ],
+        name: 'castVote',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'memberAddress',
+            type: 'address',
+          },
+        ],
+        name: 'deleteMember',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: 'proposalId',
+            type: 'uint256',
+          },
+        ],
+        name: 'execute',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
       {
         inputs: [],
@@ -101,9 +171,9 @@ export class DataService {
           },
           {
             indexed: true,
-            internalType: 'string',
-            name: 'description',
-            type: 'string',
+            internalType: 'uint256',
+            name: 'blockNumber',
+            type: 'uint256',
           },
         ],
         name: 'newProposal',
@@ -112,18 +182,6 @@ export class DataService {
       {
         anonymous: false,
         inputs: [
-          {
-            indexed: true,
-            internalType: 'address',
-            name: 'to',
-            type: 'address',
-          },
-          {
-            indexed: true,
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
-          },
           {
             indexed: true,
             internalType: 'uint256',
@@ -148,6 +206,50 @@ export class DataService {
         type: 'event',
       },
       {
+        inputs: [],
+        name: 'renounceOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256',
+          },
+        ],
+        name: 'submitProposal',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
+        inputs: [
+          {
+            internalType: 'address',
+            name: 'newOwner',
+            type: 'address',
+          },
+        ],
+        name: 'transferOwnership',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function',
+      },
+      {
         anonymous: false,
         inputs: [
           {
@@ -165,102 +267,6 @@ export class DataService {
         ],
         name: 'voteCast',
         type: 'event',
-      },
-      {
-        inputs: [],
-        name: 'MemberCount',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [],
-        name: 'ProposalCount',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'memberAddress',
-            type: 'address',
-          },
-        ],
-        name: 'addMember',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'uint256',
-            name: 'proposalId',
-            type: 'uint256',
-          },
-        ],
-        name: 'cancelProposal',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'uint256',
-            name: 'proposalId',
-            type: 'uint256',
-          },
-          {
-            internalType: 'string',
-            name: 'declaration',
-            type: 'string',
-          },
-        ],
-        name: 'castVote',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'memberAddress',
-            type: 'address',
-          },
-        ],
-        name: 'deleteMember',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'uint256',
-            name: 'proposalId',
-            type: 'uint256',
-          },
-        ],
-        name: 'execute',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
       },
       {
         inputs: [
@@ -301,6 +307,19 @@ export class DataService {
         type: 'function',
       },
       {
+        inputs: [],
+        name: 'MemberCount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [
           {
             internalType: 'uint256',
@@ -333,6 +352,19 @@ export class DataService {
         type: 'function',
       },
       {
+        inputs: [],
+        name: 'ProposalCount',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+      {
         inputs: [
           {
             internalType: 'address',
@@ -345,9 +377,9 @@ export class DataService {
             type: 'uint256',
           },
           {
-            internalType: 'string',
-            name: 'description',
-            type: 'string',
+            internalType: 'uint256',
+            name: 'blockNumber',
+            type: 'uint256',
           },
         ],
         name: 'proposalHash',
@@ -361,57 +393,8 @@ export class DataService {
         stateMutability: 'pure',
         type: 'function',
       },
-      {
-        inputs: [],
-        name: 'renounceOwnership',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'to',
-            type: 'address',
-          },
-          {
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
-          },
-          {
-            internalType: 'string',
-            name: 'description',
-            type: 'string',
-          },
-        ],
-        name: 'submitProposal',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'newOwner',
-            type: 'address',
-          },
-        ],
-        name: 'transferOwnership',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
     ];
-    this.contractAddress = '0xb8780E7EC6A20e8154D8Eb98BE357Ce6c1529D27';
+    this.contractAddress = '0xb24d69beCc704CDA419dbaE4BAb6315ed3EC9557';
   }
   //getters
   getProvider(): string {
