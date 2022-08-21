@@ -10,7 +10,7 @@ import { DataService } from 'src/app/services/data.service';
 export class CancelExecuteProposalComponent implements OnInit {
   private provider!: any;
   private Dao!: any;
-  Status!: string;
+  status!: string;
   voteCount!: number;
   private proposalId!: string;
 
@@ -33,6 +33,7 @@ export class CancelExecuteProposalComponent implements OnInit {
       this.voteCount = await this.Dao['numberOfVotes'](
         BigNumber.from(this.proposalId)
       );
+      this.Valid();
     } else {
       this.Invalid();
     }
@@ -65,6 +66,33 @@ export class CancelExecuteProposalComponent implements OnInit {
       }
     }
   }
-  async Execute() {}
-  Invalid() {}
+  async Execute() {
+    let signer = await this.provider.getSigner().getAddress();
+    if (signer == this.dservice.getOwner()) {
+      this.status = 'Waiting';
+      try {
+        let transactionResponse = await this.Dao['execute'](this.proposalId, {
+          gasLimit: 500000,
+        });
+        await transactionResponse.wait(1);
+        this.status = 'Executed!';
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      this.status = 'Only Admin!';
+    }
+  }
+  Valid() {
+    var x = document.getElementById('Execute');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    this.status = 'Waiting';
+  }
+  Invalid() {
+    var x = document.getElementById('Status');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('Execute');
+    if (x?.style.display == 'block') x.style.display = 'none';
+    this.status = 'Invalid number or Id';
+  }
 }

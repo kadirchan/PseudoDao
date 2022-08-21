@@ -26,7 +26,7 @@ export class SubmitProposalComponent implements OnInit {
   }
 
   async submitProposal(address: string, value: string) {
-    let signer = this.provider.getSigner().getAddress();
+    let signer = await this.provider.getSigner().getAddress();
     if (await this.Dao['isMember'](signer)) {
       try {
         this.Pending();

@@ -26,24 +26,27 @@ export class ProposalsComponent implements OnInit {
       this.dservice.getABI(),
       this.provider.getSigner()
     );
-    let abi = [
-      'event newProposal(address indexed to,uint256 indexed value,uint256 indexed blockNumber)',
-    ];
-
-    this.iface = new ethers.utils.Interface(abi);
+    this.getLogs();
   }
 
-  async logMessage(log: any) {
-    return (
+  logMessage(log: any, index: number) {
+    let Log =
+      index +
+      ')' +
       ' Send ' +
       ethers.utils.formatEther(this.iface.parseLog(log)['args'][1]) +
       ' ETH to ' +
-      this.iface.parseLog(log)['args'][0]
-    );
+      this.iface.parseLog(log)['args'][0];
+    console.log(Log);
+    return Log;
   }
 
   async getLogs() {
     const filter = [utils.id('newProposal(address,uint256,uint256)')];
+    let abi = [
+      'event newProposal(address indexed to,uint256 indexed value,uint256 indexed blockNumber)',
+    ];
+    this.iface = new ethers.utils.Interface(abi);
     this.logs = await this.provider.getLogs({
       fromBlock: 12820310,
       toBlock: 'latest',
@@ -54,11 +57,12 @@ export class ProposalsComponent implements OnInit {
     //off yapcan ngondestroyda
     this.Dao.on(filter, async () => {
       this.logs = await this.provider.getLogs({
-        fromBlock: 12794325,
+        fromBlock: 12820310,
         toBlock: 'latest',
         address: this.Dao.address,
         topics: filter,
       });
     });
+    console.log(this.logs);
   }
 }
