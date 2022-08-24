@@ -37,7 +37,7 @@ export class ProposalsComponent implements OnInit {
       ethers.utils.formatEther(this.iface.parseLog(log)['args'][1]) +
       ' ETH to ' +
       this.iface.parseLog(log)['args'][0];
-    console.log(Log);
+    // console.log(Log);
     return Log;
   }
 
@@ -63,6 +63,6 @@ export class ProposalsComponent implements OnInit {
         topics: filter,
       });
     });
-    console.log(this.logs);
+    // console.log(this.logs);
   }
 }

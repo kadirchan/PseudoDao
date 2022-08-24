@@ -12,6 +12,7 @@ export class ConnectWalletComponent implements OnInit {
   provider!: any;
   signerAddress!: any;
   button_status!: string;
+  connect_status!: string;
 
   constructor(private dservice: DataService) {
     this.button_status = 'Connect';
@@ -23,7 +24,50 @@ export class ConnectWalletComponent implements OnInit {
     if (typeof window.ethereum !== 'undefined') {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
       await this.provider.send('eth_requestAccounts', []);
-      this.button_status = 'Connected';
+      if (window.ethereum.isConnected()) this.button_status = 'Connected';
+      else this.button_status = 'Error';
+
+      let chainId = await window.ethereum.request({ method: 'eth_chainId' });
+      if (chainId != '0x3') {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x3' }],
+          });
+        } catch (error: any) {
+          if (error.code === 4902) {
+            try {
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [
+                  {
+                    chainId: '0x3',
+                    rpcUrl: 'https://ropsten.infura.io/v3/',
+                  },
+                ],
+              });
+            } catch (addError) {
+              console.error(addError);
+            }
+          }
+        }
+      }
+
+      //reload window when change chain
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload();
+      });
+      //reload member details when change account or log out
+      window.ethereum.on('accountsChanged', async (accounts: Array<string>) => {
+        if (accounts.length == 0) {
+          window.location.reload();
+          console.log('disconnected');
+        } else {
+          this.signerAddress = await this.provider.getSigner().getAddress();
+          await this.getRank(this.signerAddress);
+        }
+      });
+
       this.signerAddress = await this.provider.getSigner().getAddress();
       await this.getRank(this.signerAddress);
     } else {
@@ -44,46 +88,31 @@ export class ConnectWalletComponent implements OnInit {
     let count = await this.Dao['ProposalCount']();
     this.dservice.setProposalCount(count.toNumber());
 
+    var x = document.getElementById('Connect');
+    if (x?.style.display == 'none') x.style.display = 'block';
+
     if (owner == signerAddress) {
       this.dservice.setMemberRank(2);
-      this.Owner();
+      this.connect_status = 'Welcome! Admin';
     } else if (isMember) {
       this.dservice.setMemberRank(1);
-      this.Member();
+      this.connect_status = 'Welcome! Member';
     } else {
       this.dservice.setMemberRank(0);
-      this.Visitor();
+      this.connect_status = 'Welcome! Visitor';
     }
   }
 
-  Owner() {
-    var x = document.getElementById('admin');
-    if (x?.style.display == 'none') x.style.display = 'block';
-    x = document.getElementById('member');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('visitor');
-    if (x?.style.display == 'block') x.style.display = 'none';
-  }
-  Member() {
-    var x = document.getElementById('member');
-    if (x?.style.display == 'none') x.style.display = 'block';
-    x = document.getElementById('admin');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('visitor');
-    if (x?.style.display == 'block') x.style.display = 'none';
-  }
-  Visitor() {
-    var x = document.getElementById('visitor');
-    if (x?.style.display == 'none') x.style.display = 'block';
-    x = document.getElementById('member');
-    if (x?.style.display == 'block') x.style.display = 'none';
-    x = document.getElementById('admin');
-    if (x?.style.display == 'block') x.style.display = 'none';
-  }
   InstallMetamask() {}
 }
 declare global {
   interface Window {
     ethereum: any;
   }
+}
+
+interface ProviderRpcError extends Error {
+  message: string;
+  code: number;
+  data?: unknown;
 }
