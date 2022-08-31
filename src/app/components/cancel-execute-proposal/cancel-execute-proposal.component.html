@@ -4,11 +4,15 @@
   (keyup.enter)="getInput(Input.value); Input.value = ''"
   placeholder="Proposal ID or Number"
 />
-<button type="button" (click)="getInput(Input.value)">Enter</button>
+<button type="button" class="btn btn-primary" (click)="getInput(Input.value)">
+  Enter
+</button>
 
 <p id="Status" style="display: none">{{ status }}</p>
 
 <div id="Execute" style="display: none">
   <p>Total number of votes cast : {{ voteCount }}</p>
-  <button type="button" (click)="Execute()">Execute</button>
+  <button type="button" class="btn btn-primary" (click)="Execute()">
+    Execute
+  </button>
 </div>

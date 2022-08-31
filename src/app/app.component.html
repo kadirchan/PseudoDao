@@ -1,10 +1,14 @@
-<h1>pseudo DAO</h1>
-<div>
-  <app-connect-wallet></app-connect-wallet>
-</div>
-<div><app-add-member></app-add-member></div>
+<div class="container">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">pseudo-DAO</a>
+      <app-connect-wallet></app-connect-wallet>
+    </div>
+  </nav>
 
-<div><app-vote></app-vote></div>
-<div><app-cancel-execute-proposal></app-cancel-execute-proposal></div>
-<div><app-submit-proposal></app-submit-proposal></div>
-<app-proposals></app-proposals>
+  <div><app-add-member></app-add-member></div>
+  <div><app-vote></app-vote></div>
+  <div><app-cancel-execute-proposal></app-cancel-execute-proposal></div>
+  <div><app-submit-proposal></app-submit-proposal></div>
+  <app-proposals></app-proposals>
+</div>

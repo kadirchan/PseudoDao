@@ -5,8 +5,12 @@
   (keyup.enter)="addMember(Box.value); Box.value = ''"
   placeholder="Address"
 />
-<button type="button" (click)="addMember(Box.value)">Add</button>
-<button type="button" (click)="deleteMember(Box.value)">Delete</button>
+<button type="button" class="btn btn-primary" (click)="addMember(Box.value)">
+  Add
+</button>
+<button type="button" class="btn btn-primary" (click)="deleteMember(Box.value)">
+  Delete
+</button>
 
 <p>Current Member Count: {{ memberCount }}</p>
 

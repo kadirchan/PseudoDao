@@ -42,13 +42,13 @@ export class ProposalsComponent implements OnInit {
   }
 
   async getLogs() {
-    const filter = [utils.id('newProposal(address,uint256,uint256)')];
+    const filter = [utils.id('newProposal(address,uint256,address)')];
     let abi = [
-      'event newProposal(address indexed to,uint256 indexed value,uint256 indexed blockNumber)',
+      'event newProposal(address indexed to,uint256 indexed value,address indexed ERC20_contract)',
     ];
     this.iface = new ethers.utils.Interface(abi);
     this.logs = await this.provider.getLogs({
-      fromBlock: 12820310,
+      fromBlock: 12902283,
       toBlock: 'latest',
       address: this.Dao.address,
       topics: filter,
@@ -57,7 +57,7 @@ export class ProposalsComponent implements OnInit {
     //off yapcan ngondestroyda
     this.Dao.on(filter, async () => {
       this.logs = await this.provider.getLogs({
-        fromBlock: 12820310,
+        fromBlock: 12902283,
         toBlock: 'latest',
         address: this.Dao.address,
         topics: filter,

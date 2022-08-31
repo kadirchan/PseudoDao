@@ -25,17 +25,28 @@ export class SubmitProposalComponent implements OnInit {
     );
   }
 
-  async submitProposal(address: string, value: string) {
+  async submitProposal(address: string, value: string, currency: string) {
     let signer = await this.provider.getSigner().getAddress();
     if (await this.Dao['isMember'](signer)) {
       try {
         this.Pending();
-        const TransactionResponse = await this.Dao['submitProposal'](
-          address,
-          ethers.utils.parseEther(value),
-          { gasLimit: 500000 }
-        );
-        const TransactionReceipt = await TransactionResponse.wait(1);
+        if (currency == 'ETH') {
+          const TransactionResponse = await this.Dao[
+            'submitProposal(address,uint256)'
+          ](address, ethers.utils.parseEther(value), { gasLimit: 500000 });
+          const TransactionReceipt = await TransactionResponse.wait(1);
+        } else {
+          const TransactionResponse = await this.Dao[
+            'submitProposal(address,uint256,address)'
+          ](
+            address,
+            ethers.utils.parseEther(value),
+            this.dservice.getERC20Address(currency),
+            { gasLimit: 500000 }
+          );
+          const TransactionReceipt = await TransactionResponse.wait(1);
+        }
+
         this.Submitted();
       } catch (err) {
         console.log(err);
@@ -48,6 +59,8 @@ export class SubmitProposalComponent implements OnInit {
   Pending() {
     var x = document.getElementById('Status');
     if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('Pending');
+    if (x?.style.display == 'none') x.style.display = 'block';
     this.Status = 'Pending';
   }
   NotMember() {
@@ -58,11 +71,15 @@ export class SubmitProposalComponent implements OnInit {
   Submitted() {
     var x = document.getElementById('Status');
     if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('Pending');
+    if (x?.style.display == 'block') x.style.display = 'none';
     this.Status = 'Submitted';
   }
   Error() {
     var x = document.getElementById('Status');
     if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('Pending');
+    if (x?.style.display == 'block') x.style.display = 'none';
     this.Status = 'Error';
   }
 }
