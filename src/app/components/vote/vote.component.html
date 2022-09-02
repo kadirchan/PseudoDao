@@ -1,35 +1,61 @@
 <h2>Vote</h2>
+<div class="row">
+  <div class="col-6">
+    <div class="row">
+      <div class="form-floating col-8">
+        <input
+          #Input
+          class="form-control"
+          id="floatingInputGrid"
+          placeholder="0"
+          value=""
+        />
+        <label for="floatingInputGrid">Proposal ID or Number</label>
+      </div>
+      <div class="col-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="getInput(Input.value)"
+        >
+          Enter
+        </button>
+      </div>
+    </div>
 
-<input
-  #Input
-  (keyup.enter)="getInput(Input.value); Input.value = ''"
-  placeholder="Proposal ID or Number"
-/>
-<button type="button" class="btn btn-primary" (click)="getInput(Input.value)">
-  Enter
-</button>
+    <div class="row">
+      <div class="form-floating col-8">
+        <input
+          #Delegation
+          class="form-control"
+          id="floatingInputGrid"
+          placeholder="0"
+          value=""
+        />
+        <label for="floatingInputGrid">Write 'Approve' to submit</label>
+      </div>
+      <div class="col-2">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="getDelegation(Delegation.value)"
+        >
+          Enter
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <p id="Delegate" style="display: none">
+      You must write Approve to submit your vote
+    </p>
 
-<input
-  #Delegation
-  (keyup.enter)="getDelegation(Delegation.value); Delegation.value = ''"
-  placeholder="write 'Approve' to submit"
-  maxlength="7"
-/>
-<button
-  type="button"
-  class="btn btn-primary"
-  (click)="getDelegation(Delegation.value)"
->
-  Enter
-</button>
-<p id="Delegate" style="display: none">
-  You must write Approve to submit your vote
-</p>
-
-<p id="Invalid" style="display: none">Invalid number or Id</p>
-<div id="Vote" style="display: none">
-  <p>Total number of votes cast : {{ voteCount }}</p>
-  <button type="button" class="btn btn-primary" (click)="castVote()">
-    Vote
-  </button>
+    <p id="Invalid" style="display: none">Invalid number or Id</p>
+    <div id="Vote" style="display: none">
+      <p>Total number of votes cast : {{ voteCount }}</p>
+      <button type="button" class="btn btn-primary" (click)="castVote()">
+        Vote
+      </button>
+    </div>
+  </div>
 </div>

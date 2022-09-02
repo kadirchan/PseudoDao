@@ -1,14 +1,92 @@
 <div class="container">
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">pseudo-DAO</a>
-      <app-connect-wallet></app-connect-wallet>
+  <div class="col">
+    <div class="row">
+      <nav class="navbar navbar-lg bg-light">
+        <div class="container-fluid">
+          <div class="col-8">
+            <a class="navbar-brand" href="/add-member">
+              <img
+                src="././assets/img/eth-diamond-black.png"
+                alt=""
+                width="20"
+                height="31"
+                class="d-inline-block align-text-top"
+              />
+              pseudo-Dao
+            </a>
+          </div>
+          <div class="col">
+            <app-connect-wallet></app-connect-wallet>
+          </div>
+          <div class="col">
+            <app-balance></app-balance>
+          </div>
+        </div>
+      </nav>
     </div>
-  </nav>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-6">
+        <nav aria-label="...">
+          <ul class="pagination pagination justify-content-center">
+            <li class="page-item" aria-current="page">
+              <a class="page-link" href="/add-member">Add Member</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="/submit-proposal">Submit Proposal</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="/vote">Vote</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="/cancel-execute-proposal"
+                >Cancel Execute</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col"></div>
+    </div>
+  </div>
+</div>
+<div class="col">
+  <div>
+    <div
+      style="
+        position: absolute;
+        border: 0.5px outset;
+        border-radius: 15px;
+        margin-top: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 30%;
+        width: 50%;
+        left: 0;
+        right: 0;
+        text-align: center;
+      "
+    >
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
 
-  <div><app-add-member></app-add-member></div>
-  <div><app-vote></app-vote></div>
-  <div><app-cancel-execute-proposal></app-cancel-execute-proposal></div>
-  <div><app-submit-proposal></app-submit-proposal></div>
+<div
+  class="col"
+  style="
+    position: absolute;
+    border: 0.5px outset;
+    border-radius: 15px;
+    margin-top: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30%;
+    width: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+  "
+>
   <app-proposals></app-proposals>
 </div>

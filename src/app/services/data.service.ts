@@ -15,6 +15,7 @@ export class DataService {
   private OSMAN_address!: string;
   private SAFIYE_address!: string;
   private RECEP_address!: string;
+  private tokens!: string[];
 
   constructor() {
     this.memberCount = 0;
@@ -815,10 +816,18 @@ export class DataService {
     this.OSMAN_address = '0x7614aD4B540Ac6B84e2bA4613472959DdB0Bd039';
     this.SAFIYE_address = '0x756F19957f3D2a72BfDEB2B5a96fdfA5e7330fB9';
     this.RECEP_address = '0xD6363e4E6b7a4873b58DC705C0116C49C3067394';
+    this.tokens = [
+      '0x7614aD4B540Ac6B84e2bA4613472959DdB0Bd039',
+      '0x756F19957f3D2a72BfDEB2B5a96fdfA5e7330fB9',
+      '0xD6363e4E6b7a4873b58DC705C0116C49C3067394',
+    ];
   }
   //getters
   getProvider(): string {
     return this.httpProvider;
+  }
+  getTokens(): string[] {
+    return this.tokens;
   }
 
   getProposalCount(): number {
@@ -848,6 +857,12 @@ export class DataService {
     else if (currency == 'BOHOYT') return this.RECEP_address;
     else return this.contractAddress;
   }
+  getERC20Symbol(address: string) {
+    if (address == this.OSMAN_address) return 'USD';
+    else if (address == this.SAFIYE_address) return 'UYY';
+    else if (address == this.RECEP_address) return 'BOHOYT';
+    else return 'ETH';
+  }
   //setters
   setMemberRank(rank: number) {
     this.member_rank = rank;
@@ -860,5 +875,10 @@ export class DataService {
   }
   setMemberCount(count: number) {
     this.memberCount = count;
+  }
+
+  //tokens
+  addToken(address: string) {
+    this.tokens.push(address);
   }
 }

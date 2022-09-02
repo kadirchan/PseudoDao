@@ -1,18 +1,42 @@
-<h2>cancel-execute proposal</h2>
-<input
-  #Input
-  (keyup.enter)="getInput(Input.value); Input.value = ''"
-  placeholder="Proposal ID or Number"
-/>
-<button type="button" class="btn btn-primary" (click)="getInput(Input.value)">
-  Enter
-</button>
-
-<p id="Status" style="display: none">{{ status }}</p>
-
-<div id="Execute" style="display: none">
-  <p>Total number of votes cast : {{ voteCount }}</p>
-  <button type="button" class="btn btn-primary" (click)="Execute()">
-    Execute
-  </button>
+<h2>Cancel Execute Proposal</h2>
+<div class="row">
+  <div class="form-floating col-4">
+    <input
+      #Input
+      class="form-control"
+      id="floatingInputGrid"
+      placeholder="0"
+      value=""
+    />
+    <label for="floatingInputGrid">Proposal ID or Number</label>
+  </div>
+  <div class="col-2">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="getInput(Input.value)"
+    >
+      Enter
+    </button>
+  </div>
+  <div class="col-6" id="Execute" style="display: none">
+    <p>Total number of votes cast : {{ voteCount }}</p>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="Execute()"
+      style="margin: 1px"
+    >
+      Execute
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="Cancel()"
+      style="margin: 1px"
+    >
+      Cancel
+    </button>
+  </div>
+  <p id="Status" style="display: none">{{ status }}</p>
 </div>

@@ -35,7 +35,9 @@ export class ProposalsComponent implements OnInit {
       ')' +
       ' Send ' +
       ethers.utils.formatEther(this.iface.parseLog(log)['args'][1]) +
-      ' ETH to ' +
+      ' ' +
+      this.dservice.getERC20Symbol(this.iface.parseLog(log)['args'][2]) +
+      ' to ' +
       this.iface.parseLog(log)['args'][0];
     // console.log(Log);
     return Log;

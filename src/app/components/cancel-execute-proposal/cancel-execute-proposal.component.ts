@@ -83,6 +83,26 @@ export class CancelExecuteProposalComponent implements OnInit {
       this.status = 'Only Admin!';
     }
   }
+  async Cancel() {
+    let signer = await this.provider.getSigner().getAddress();
+    if (signer == this.dservice.getOwner()) {
+      this.status = 'Waiting';
+      try {
+        let transactionResponse = await this.Dao['cancelProposal'](
+          this.proposalId,
+          {
+            gasLimit: 500000,
+          }
+        );
+        await transactionResponse.wait(1);
+        this.status = 'Cancelled!';
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      this.status = 'Only Admin!';
+    }
+  }
   Valid() {
     var x = document.getElementById('Execute');
     if (x?.style.display == 'none') x.style.display = 'block';
