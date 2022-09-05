@@ -43,6 +43,7 @@ export class AddMemberComponent implements OnInit {
   }
 
   async addMember(memberAddress: string) {
+    console.log(memberAddress);
     let signer = await this.provider.getSigner().getAddress();
     if (signer == this.dservice.getOwner()) {
       if (await this.Dao['isMember'](memberAddress)) {

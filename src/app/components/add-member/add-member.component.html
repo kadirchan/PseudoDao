@@ -1,17 +1,40 @@
 <h2>Add/Delete Member</h2>
 
-<input
-  #Box
-  (keyup.enter)="addMember(Box.value); Box.value = ''"
-  placeholder="Address"
-/>
-<button type="button" class="btn btn-primary" (click)="addMember(Box.value)">
-  Add
-</button>
-<button type="button" class="btn btn-primary" (click)="deleteMember(Box.value)">
-  Delete
-</button>
-
-<p>Current Member Count: {{ memberCount }}</p>
-
-<p style="display: none">{{ status }}</p>
+<div class="row">
+  <div class="col-6">
+    <div class="form-floating">
+      <input
+        #Input
+        class="form-control"
+        id="floatingInputGrid"
+        placeholder="0"
+        value=""
+      />
+      <label for="floatingInputGrid">Address</label>
+    </div>
+  </div>
+  <div class="col-2">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="addMember(Input.value)"
+    >
+      Add
+    </button>
+  </div>
+  <div class="col-2">
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="deleteMember(Input.value)"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div>
+    <p>Current Member Count: {{ memberCount }}</p>
+  </div>
+  <p>{{ status }}</p>
+</div>
