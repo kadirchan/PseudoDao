@@ -1,10 +1,12 @@
-# DAOAngular
+# PseudoDao
+![image](https://user-images.githubusercontent.com/67785258/188463236-2780f7b3-86ac-4c2d-a20f-6e7076b284ec.png)
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.2.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm install` nad `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
